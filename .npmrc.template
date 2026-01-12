@@ -1,0 +1,5 @@
+# npm registry authentication template
+# Copy this file to .npmrc and replace ${NPM_TOKEN} with your actual token
+# DO NOT commit .npmrc with real tokens to version control
+
+//registry.npmjs.org/:_authToken=${NPM_TOKEN}

@@ -1,0 +1,131 @@
+# Detekt configuration for scryfall-api module
+# Only non-default settings are specified (buildUponDefaultConfig = true)
+# See: https://detekt.dev/docs/rules/
+
+complexity:
+  LongMethod:
+    active: true
+    threshold: 80  # Moderate length for readability
+  LongParameterList:
+    active: true
+    functionThreshold: 8  # API wrapper methods need many parameters
+    constructorThreshold: 10  # Data classes can have many fields
+    ignoreDefaultParameters: true  # Don't count parameters with defaults
+  TooManyFunctions:
+    active: true
+    thresholdInFiles: 25  # Extension files can have many functions
+    thresholdInClasses: 25
+    thresholdInInterfaces: 15
+  CyclomaticComplexMethod:
+    active: true
+    threshold: 15
+  LargeClass:
+    active: true
+    threshold: 600
+    # Test classes can be large
+    excludes:
+      - '**/test/**'
+      - '**/commonTest/**'
+      - '**/androidHostTest/**'
+      - '**/androidDeviceTest/**'
+      - '**/jvmTest/**'
+
+empty-blocks:
+  EmptyCatchBlock:
+    allowedExceptionNameRegex: '_|(ignore|expected).*'
+  EmptyClassBlock:
+    active: false  # Data classes often have empty bodies
+  EmptyFunctionBlock:
+    ignoreOverridden: true
+
+exceptions:
+  TooGenericExceptionCaught:
+    active: true
+    exceptionNames:
+      - Error
+      - Exception
+      - RuntimeException
+      - Throwable
+    allowedExceptionNameRegex: '_|(ignore|expected).*'
+  TooGenericExceptionThrown:
+    active: false  # API wrappers may need generic exceptions
+  SwallowedException:
+    active: true
+    allowedExceptionNameRegex: '_|(ignore|expected).*'
+
+naming:
+  FunctionNaming:
+    # Allow snake_case for @Test functions (methodName_scenario_expectedResult pattern)
+    ignoreAnnotated:
+      - 'Composable'
+      - 'Test'
+      - 'kotlin.test.Test'
+      - 'org.junit.Test'
+      - 'org.junit.jupiter.api.Test'
+    # Fallback: exclude test directories (ignoreAnnotated doesn't work in all source sets)
+    excludes:
+      - '**/test/**'
+      - '**/commonTest/**'
+      - '**/androidHostTest/**'
+      - '**/androidDeviceTest/**'
+      - '**/jvmTest/**'
+  MatchingDeclarationName:
+    active: true  # File name should match main class/object
+  PackageNaming:
+    active: true
+    packagePattern: '[a-z]+(\.[a-z][A-Za-z0-9]*)*'
+
+performance:
+  SpreadOperator:
+    active: false  # Necessary in KMP for varargs
+
+potential-bugs:
+  UnnecessarySafeCall:
+    active: true  # Catch ?. on non-null types
+
+style:
+  ForbiddenComment:
+    active: true
+    # Allow TODOs in tests
+    excludes:
+      - '**/test/**'
+      - '**/commonTest/**'
+      - '**/androidHostTest/**'
+      - '**/androidDeviceTest/**'
+      - '**/jvmTest/**'
+  DataClassContainsFunctions:
+    active: false  # Data classes can have utility functions
+  UnnecessaryLet:
+    active: false  # let can improve readability in chains
+  WildcardImport:
+    active: false  # Common in KMP codebases
+  ThrowsCount:
+    active: true
+    max: 5
+  MaxLineLength:
+    active: true
+    maxLineLength: 120
+    excludePackageStatements: true
+    excludeImportStatements: true
+    excludeCommentStatements: true
+  MagicNumber:
+    active: true
+    # Exclude all test source sets
+    excludes:
+      - '**/test/**'
+      - '**/commonTest/**'
+      - '**/androidTest/**'
+      - '**/androidHostTest/**'
+      - '**/androidDeviceTest/**'
+      - '**/iosTest/**'
+      - '**/jvmTest/**'
+  ReturnCount:
+    active: true
+    max: 3  # Encourage early returns but limit complexity
+    excludeGuardClauses: true  # Don't count guard clauses
+  UnusedPrivateMember:
+    active: true  # Catch dead code
+  UseCheckOrError:
+    active: true  # Prefer check() and error() over throw IllegalStateException
+  UseRequire:
+    active: true  # Prefer require() over throw IllegalArgumentException

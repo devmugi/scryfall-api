@@ -1,0 +1,20 @@
+{
+  "name": "node-npm-js-sample",
+  "version": "1.0.0",
+  "description": "Pure JavaScript sample demonstrating @devmugi/scryfall-api usage",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@devmugi/scryfall-api": "^1.0.0"
+  },
+  "keywords": [
+    "scryfall",
+    "mtg",
+    "magic",
+    "cards",
+    "sample"
+  ],
+  "license": "MIT"
+}

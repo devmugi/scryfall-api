@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scryfall API Browser Sample</title>
+</head>
+<body>
+  <div id="app">
+    <h1>Scryfall Card Search</h1>
+
+    <form id="search-form">
+      <input type="text" id="search-input" placeholder="Search cards (e.g., lightning bolt)">
+      <button type="submit">Search</button>
+      <button type="button" id="random-btn">Random Card</button>
+    </form>
+
+    <div id="status"></div>
+    <div id="results"></div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

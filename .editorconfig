@@ -1,0 +1,43 @@
+# EditorConfig for scryfall-api module
+# Ktlint rules are configured here; gradle controls version and experimental flag
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 4
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.{kt,kts}]
+# Use IntelliJ IDEA style (more relaxed than kotlin_official)
+ktlint_code_style = intellij_idea
+max_line_length = 120
+
+# Allow backtick function names in tests
+ktlint_ignore_back_ticked_identifier = true
+
+# Function signature formatting
+ktlint_function_signature_body_expression_wrapping = multiline
+
+# Disabled rules (with justification)
+# - Wildcard imports: common in KMP, matches detekt WildcardImport=disabled
+ktlint_standard_no-wildcard-imports = disabled
+# - Trailing commas: KMP expect/actual declarations don't need them
+ktlint_standard_trailing-comma-on-call-site = disabled
+ktlint_standard_trailing-comma-on-declaration-site = disabled
+# - Function naming: tests use snake_case and backticks
+ktlint_standard_function-naming = disabled
+# - Filename: KMP has platform-specific files (Foo.android.kt)
+ktlint_standard_filename = disabled
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.{yml,yaml}]
+indent_size = 2
+
+[*.{json,xml}]
+indent_size = 2

@@ -1,0 +1,25 @@
+{
+  "name": "node-npm-ts-sample",
+  "version": "1.0.0",
+  "description": "Pure TypeScript sample demonstrating @devmugi/scryfall-api usage with full type safety",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@devmugi/scryfall-api": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "scryfall",
+    "mtg",
+    "magic",
+    "cards",
+    "sample",
+    "typescript"
+  ],
+  "license": "MIT"
+}
