@@ -247,10 +247,25 @@ publishing {
 }
 
 // npm publishing configuration
+tasks.register<Copy>("copyNpmReadme") {
+    group = "devmugi"
+    description = "Copy npm README to distribution"
+    from("docs/npm/README.md")
+    into(layout.buildDirectory.dir("dist/js/productionLibrary"))
+}
+
+tasks.named("jsNodeProductionLibraryDistribution") {
+    finalizedBy("copyNpmReadme")
+}
+
+tasks.named("jsBrowserProductionLibraryDistribution") {
+    finalizedBy("copyNpmReadme")
+}
+
 tasks.register("prepareNpmPublish") {
     group = "devmugi"
     description = "Kotlin Multiplatform library for Scryfall MTG API"
-    dependsOn("jsProductionLibraryDistribution")
+    dependsOn("jsNodeProductionLibraryDistribution")
 
     doLast {
         val distDir = layout.buildDirectory.dir("dist/js/productionLibrary").get().asFile
