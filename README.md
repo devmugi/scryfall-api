@@ -54,16 +54,46 @@ All features work consistently across all platforms with appropriate HTTP client
 
 ## Installation
 
-Add to your `build.gradle.kts`:
+### Kotlin/Gradle (GitHub Packages)
+
+Add the GitHub Packages repository and dependency to your `build.gradle.kts`:
 
 ```kotlin
-kotlin {
-    sourceSets {
-        commonMain.dependencies {
-            implementation(project(":scryfall-api"))
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/devmugi/scryfall-api")
+        credentials {
+            username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+            password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
         }
     }
 }
+
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation("io.github.devmugi:scryfall-api:1.0.0")
+        }
+    }
+}
+```
+
+> **Note:** GitHub Packages requires authentication. Add `gpr.user` and `gpr.key` to your `~/.gradle/gradle.properties` or set `GITHUB_ACTOR` and `GITHUB_TOKEN` environment variables.
+
+### npm/JavaScript
+
+```bash
+npm install @devmugi/scryfall-api
+```
+
+Then import in your code:
+
+```javascript
+import { Scryfall } from '@devmugi/scryfall-api';
+
+const scryfall = new Scryfall();
+const card = await scryfall.cards.namedExact({ name: 'Lightning Bolt' });
+console.log(card.name);
 ```
 
 ## Quick Start
