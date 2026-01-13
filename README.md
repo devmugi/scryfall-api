@@ -3,7 +3,7 @@
   <p><strong>Kotlin Multiplatform library for the Scryfall Magic: The Gathering API</strong></p>
 
   ![Kotlin](https://img.shields.io/badge/Kotlin-2.0+-7F52FF?logo=kotlin&logoColor=white)
-  ![Version](https://img.shields.io/badge/version-1.0.0-blue)
+  ![Version](https://img.shields.io/badge/version-1.0.1-blue)
   ![License](https://img.shields.io/badge/license-MIT-green)
 
   ![Android](https://img.shields.io/badge/Android-24+-3DDC84?logo=android&logoColor=white)
@@ -66,7 +66,7 @@ repositories {
 kotlin {
     sourceSets {
         commonMain.dependencies {
-            implementation("io.github.devmugi:scryfall-api:1.0.0")
+            implementation("io.github.devmugi:scryfall-api:1.0.1")
         }
     }
 }
