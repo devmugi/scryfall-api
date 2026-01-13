@@ -24,7 +24,15 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Run checks
-        run: ./gradlew check --no-configuration-cache
+        run: ./gradlew check
+        env:
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
 
       - name: Build all targets
-        run: ./gradlew build --no-configuration-cache
+        run: ./gradlew build
+        env:
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_PASSWORD }}
