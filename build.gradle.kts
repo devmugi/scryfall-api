@@ -1,3 +1,6 @@
+import com.vanniktech.maven.publish.KotlinMultiplatform
+import com.vanniktech.maven.publish.JavadocJar
+
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.android.kotlin.multiplatform.library)
@@ -5,7 +8,7 @@ plugins {
     alias(libs.plugins.dokka)
     alias(libs.plugins.detekt)
     alias(libs.plugins.ktlint)
-    id("maven-publish")
+    alias(libs.plugins.maven.publish)
 }
 
 group = "io.github.devmugi"
@@ -196,52 +199,46 @@ tasks.register("ktlintFormatAll") {
     dependsOn(tasks.withType<org.jlleitschuh.gradle.ktlint.tasks.KtLintFormatTask>())
 }
 
-// Dokka Javadoc JAR for Maven publishing
-val dokkaJavadocJar by tasks.registering(Jar::class) {
-    dependsOn(tasks.dokkaGeneratePublicationHtml)
-    from(tasks.dokkaGeneratePublicationHtml.flatMap { it.outputDirectory })
-    archiveClassifier.set("javadoc")
-}
+// Maven Central publishing configuration
+mavenPublishing {
+    publishToMavenCentral(automaticRelease = true)
+    signAllPublications()
 
-// Maven publishing configuration
-publishing {
-    publications {
-        withType<MavenPublication> {
-            artifact(dokkaJavadocJar)
-            pom {
-                name.set("Scryfall API")
-                description.set("Kotlin Multiplatform library for Scryfall MTG API")
-                url.set("https://github.com/devmugi/scryfall-api")
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("devmugi")
-                        name.set("devmugi")
-                    }
-                }
-                scm {
-                    url.set("https://github.com/devmugi/scryfall-api")
-                    connection.set("scm:git:git://github.com/devmugi/scryfall-api.git")
-                    developerConnection.set("scm:git:ssh://github.com/devmugi/scryfall-api.git")
-                }
+    coordinates(group.toString(), "scryfall-api", version.toString())
+
+    configure(
+        KotlinMultiplatform(
+            javadocJar = JavadocJar.Dokka("dokkaGeneratePublicationHtml"),
+            sourcesJar = true,  // include sources
+        )
+    )
+
+    pom {
+        name.set("Scryfall API")
+        description.set("Kotlin Multiplatform library for Scryfall MTG API")
+        inceptionYear.set("2025")
+        url.set("https://github.com/devmugi/scryfall-api")
+
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/licenses/MIT")
+                distribution.set("https://opensource.org/licenses/MIT")
             }
         }
-    }
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/devmugi/scryfall-api")
-            credentials {
-                username = project.findProperty("gpr.user") as String?
-                    ?: System.getenv("GITHUB_ACTOR")
-                password = project.findProperty("gpr.key") as String?
-                    ?: System.getenv("GITHUB_TOKEN")
+
+        developers {
+            developer {
+                id.set("devmugi")
+                name.set("devmugi")
+                url.set("https://github.com/devmugi")
             }
+        }
+
+        scm {
+            url.set("https://github.com/devmugi/scryfall-api")
+            connection.set("scm:git:git://github.com/devmugi/scryfall-api.git")
+            developerConnection.set("scm:git:ssh://github.com/devmugi/scryfall-api.git")
         }
     }
 }

@@ -54,19 +54,13 @@ All features work consistently across all platforms with appropriate HTTP client
 
 ## Installation
 
-### Kotlin/Gradle (GitHub Packages)
+### Kotlin/Gradle
 
-Add the GitHub Packages repository and dependency to your `build.gradle.kts`:
+Add the dependency to your `build.gradle.kts`:
 
 ```kotlin
 repositories {
-    maven {
-        url = uri("https://maven.pkg.github.com/devmugi/scryfall-api")
-        credentials {
-            username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
-            password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
-        }
-    }
+    mavenCentral()
 }
 
 kotlin {
@@ -77,8 +71,6 @@ kotlin {
     }
 }
 ```
-
-> **Note:** GitHub Packages requires authentication. Add `gpr.user` and `gpr.key` to your `~/.gradle/gradle.properties` or set `GITHUB_ACTOR` and `GITHUB_TOKEN` environment variables.
 
 ### npm/JavaScript
 
