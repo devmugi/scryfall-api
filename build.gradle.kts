@@ -54,6 +54,8 @@ kotlin {
         // Configure package.json for npm
         compilations["main"].packageJson {
             customField("name", "@devmugi/scryfall-api")
+            customField("author", "devmugi")
+            customField("version", "1.0.0")
             customField("description", "Kotlin Multiplatform library for Scryfall MTG API")
             customField(
                 "keywords",
